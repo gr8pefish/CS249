@@ -7,9 +7,17 @@ public class CircularSinglyLinkedList {
     private CircularSinglyLinkedNode current;
     private int count;
 
-    public CircularSinglyLinkedList(){} //Default constructor, nothing to initialize
+    /**
+     * Creates a circular singly linked list
+     * Default constructor, nothing to initialize
+     */
+    public CircularSinglyLinkedList(){}
 
-    public void insert(CircularSinglyLinkedNode toAdd) { // insert node after current
+    /**
+     * Inserts a node to the end of the list
+     * @param toAdd - the node to add
+     */
+    public void insert(CircularSinglyLinkedNode toAdd) {
         if (count == 0) {
             toAdd.setNext(toAdd);
             current = toAdd;
@@ -23,6 +31,10 @@ public class CircularSinglyLinkedList {
         count++;
     }
 
+    /**
+     * Removes the node from the front of the list
+     * @return the node if one is removed, null otherwise
+     */
     public CircularSinglyLinkedNode remove(){
         if (count == 0){
             return null;
@@ -40,7 +52,13 @@ public class CircularSinglyLinkedList {
         }
     }
 
-    public CircularSinglyLinkedNode removeAt(int index){ //HAVE TO MOVE CURRENT FOR NEXT ITERATION, also use display as debug
+    /**
+     * Removes a node at the index desired.
+     * NOTE: This method alters the current pointer to be the node right after the one removed. Not advised for a typical 'pop' operation.
+     * @param index - the numerical index of the node to be removed. Can be larger than the lists' size, as it is circular and will simply loop around
+     * @return the node if it could be removed, null otherwise
+     */
+    public CircularSinglyLinkedNode removeAt(int index){
         if (count == 0){
             return null;
         } else if (count == 1) {
@@ -53,8 +71,8 @@ public class CircularSinglyLinkedList {
             } else
                 return null;
         } else if (count == 2) {
-            System.out.println("Index: "+index);
-            if (index%2 == 0){
+//            System.out.println("Index: "+index);
+            if (index%2 == 0){ //the modulus determines if the node to be removed is the current node or the other one (since it is just two elements)
                 current = current.getNext();
                 current.setNext(current);
                 count--;
@@ -64,7 +82,7 @@ public class CircularSinglyLinkedList {
                 count--;
                 return current;
             }else{
-                System.out.println("ERROR");
+                System.out.println("ERROR"); //should be unreachable
                 return null;
             }
         } else {
@@ -74,7 +92,7 @@ public class CircularSinglyLinkedList {
                 count--;
                 return temp;
             }else{
-                for (int i = 0; i < index - 1; i++) {
+                for (int i = 0; i < index - 1; i++) { //have to iterate until the correct location is reached
                     current = current.getNext();
                 }
                 temp = current.getNext();
@@ -90,6 +108,9 @@ public class CircularSinglyLinkedList {
 
     public int getCount(){ return count; }
 
+    /**
+     * Displays the contents of the list
+     */
     public void display(){
         System.out.println("\nList contents: ");
         int tempCount = count;
@@ -100,7 +121,7 @@ public class CircularSinglyLinkedList {
             while (tempCount > 0){
                 ArrayList myList = node.getAllData();
                 if (!myList.isEmpty()){
-//                    System.out.println("\nItem #"+tempCount+" contains the data: ");
+//                    System.out.println("\nItem #"+tempCount+" contains the data: "); //looks better without this line, in my opinion
                     for (Object obj : myList){
                         System.out.print(obj + " ");
                     }

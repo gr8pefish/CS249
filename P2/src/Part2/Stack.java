@@ -6,14 +6,26 @@ public class Stack<T,S> {
 
     private CircularSinglyLinkedList list;
 
+    /**
+     * Implements a generic stack using the circular singly linked list as the underlying data structure (also composed of generic nodes)
+     */
     public Stack(){
         list = new CircularSinglyLinkedList();
     }
 
+    /**
+     * Pushes a new node onto the stack
+     * @param first - the first data element
+     * @param second - the second data element
+     */
     public void push(T first, S second){
         list.insert(new CircularSinglyLinkedNode(first, second));
     }
 
+    /**
+     * Pops the node from the top of the stack
+     * @return an ArrayList of the data removed (will be empty if nothing was popped)
+     */
     public ArrayList<T> pop(){
         CircularSinglyLinkedNode node = list.remove();
         if (node != null)
@@ -22,6 +34,9 @@ public class Stack<T,S> {
             return new ArrayList<T>();
     }
 
+    /**
+     * Displays the stack
+     */
     public void display(){
         System.out.println("\nStack contents: ");
         int tempCount = list.getCount();

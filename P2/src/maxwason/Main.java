@@ -1,9 +1,12 @@
 package maxwason;
 
+import Part1.Line;
 import Part1.Store;
+import Part2.CircularSinglyLinkedNode;
 import Part2.Stack;
 import Part3.EliminationGame;
 
+import javax.print.DocFlavor;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -12,9 +15,15 @@ public class Main {
     public static void main(String[] args) {
 //        testStore(2, 3);
 //        testStack();
-        playEliminationGame();
+        playEliminationGame(5,3,1);
     }
 
+
+    /**
+     * Runs the store loop, creates a menu and waits for user input.
+     * @param maximumNumberOfLines - analogous to the number of clerks
+     * @param maximumLineLength - the maximum length of each line
+     */
     public static void testStore(int maximumNumberOfLines, int maximumLineLength){
         Store myStore = new Store(maximumNumberOfLines, maximumLineLength);
 
@@ -49,28 +58,47 @@ public class Main {
         }
     }
 
+    /**
+     * Tests the stack by inputting a wide range of cases
+     */
     public static void testStack(){
-        Stack myStack = new Stack();
-        myStack.push(1.3,"hi");
-        myStack.push(2,2);
-        myStack.pop();
-        myStack.push("one", "2");
-        myStack.pop();
-        myStack.display();
-        myStack.pop();
-        myStack.display();
-        myStack.pop();
-        myStack.display();
-        myStack.push(22, 1.4);
-        myStack.display();
-        myStack.push("hi", "u n00b");
-        myStack.push(0, '1');
-        myStack.display();
+
+        //creates two stacks
+        Stack firstStack = new Stack();
+        Stack secondStack = new Stack();
+
+        firstStack.push((int)1, (String)"hi"); //the typecasting is unnecessary, it is just to make it obvious to you that they are two different types
+        secondStack.push((float)1.2, (char)'e'); //once again, any object can be put on to the stack
+
+        //display both stacks
+        firstStack.display();
+        secondStack.display();
+
+        //proper pushing
+        firstStack.push((Object)2, (Object)3);
+        firstStack.push(new CircularSinglyLinkedNode<Integer, String>(2,"no"), new CircularSinglyLinkedNode<Integer, String>(3,"yes")); //you can push ANY object, in this case the nodes inside nodes
+        firstStack.display();
+
+        //proper popping
+        secondStack.push(1,5);
+        secondStack.display();
+        secondStack.pop();
+        secondStack.display();
+        secondStack.pop();
+        secondStack.display();
+        secondStack.pop(); //works with empty stacks
+        secondStack.display();
+
     }
 
-    public static void playEliminationGame(){
-        EliminationGame game = new EliminationGame(5,3,0);
-        game.initGame();
-        game.displayPlayers();
+    /**
+     * Plays the elimination game to determine the winning spot with the given inputs.
+     * @param numberOfPlayers - must be 20 or less (only due to the limited number of names I came up with)
+     * @param eliminationNumber - leave as 0 and it will be randomly generated
+     * @param startingLocation - starts at index 0 to reference the first player
+     */
+    public static void playEliminationGame(int numberOfPlayers, int eliminationNumber, int startingLocation){
+        EliminationGame game = new EliminationGame(numberOfPlayers, eliminationNumber, startingLocation);
+        game.playGame();
     }
 }

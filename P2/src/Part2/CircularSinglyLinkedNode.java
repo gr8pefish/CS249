@@ -8,7 +8,11 @@ public class CircularSinglyLinkedNode <T, S> {
     private S second;
     private CircularSinglyLinkedNode<T,S> next;
 
-    //Constructor
+    /**
+     * Abstract node class that holds two data elements
+     * @param firstElement
+     * @param secondElement
+     */
     public CircularSinglyLinkedNode(T firstElement, S secondElement){
         first=firstElement;
         second=secondElement;
@@ -24,7 +28,7 @@ public class CircularSinglyLinkedNode <T, S> {
         return second;
     }
 
-    //Return all data
+    //Returns all data as an ArrayList
     public ArrayList<T> getAllData(){
         ArrayList temp = new ArrayList();
         temp.add(first);
