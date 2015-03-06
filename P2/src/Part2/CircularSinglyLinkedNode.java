@@ -2,63 +2,49 @@ package Part2;
 
 import java.util.ArrayList;
 
-public class CircularSinglyLinkedNode <T, S> {
+public class CircularSinglyLinkedNode <T> {
 
-    private T first;
-    private S second;
-    private CircularSinglyLinkedNode<T,S> next;
+    private T data;
+    private CircularSinglyLinkedNode<T> next;
 
     /**
-     * Abstract node class that holds two data elements
-     * @param firstElement
-     * @param secondElement
+     * Abstract node class that holds one data elements
+     * @param dataElement - the data held
      */
-    public CircularSinglyLinkedNode(T firstElement, S secondElement){
-        first=firstElement;
-        second=secondElement;
+    public CircularSinglyLinkedNode(T dataElement){
+        data=dataElement;
     }
 
-    //Return first object
-    public T getFirst(){
-        return first;
+    //Return data object
+    public T getData(){
+        return data;
     }
 
-    //Return second object
-    public S getSecond(){
-        return second;
-    }
-
-    //Returns all data as an ArrayList
+    //Returns all data as an ArrayList (since this node only has one piece of data it isn't too useful, but for other nodes with more data it can be)
     public ArrayList<T> getAllData(){
         ArrayList temp = new ArrayList();
-        temp.add(first);
-        temp.add(second);
+        temp.add(data);
         return temp;
     }
 
-    //Set first object
-    public void setFirst(T input){
-        first = input;
-    }
-
-    //Set second object
-    public void setSecond(S input){
-        second = input;
+    //Set data object
+    public void setData(T input){
+        data = input;
     }
 
     //Return next node
-    public CircularSinglyLinkedNode<T,S> getNext(){
+    public CircularSinglyLinkedNode<T> getNext(){
         return next;
     }
 
     //Set next node
-    public void setNext(CircularSinglyLinkedNode<T,S> inputNode){
+    public void setNext(CircularSinglyLinkedNode<T> inputNode){
         next = inputNode;
     }
 
-    //Return objects as a pair such as (X,Y)
+    //Return data
     public String toString(){
-        return "(" + first + "," + second + ")";
+        return data.toString();
     }
 
 }

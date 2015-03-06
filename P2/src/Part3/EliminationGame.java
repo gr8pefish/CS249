@@ -33,7 +33,7 @@ public class EliminationGame {
         this.startingLocation = startingLocation;
 
         random = new Random();
-        list = new CircularSinglyLinkedList();
+        list = new CircularSinglyLinkedList<String>();
     }
 
     /**
@@ -41,7 +41,7 @@ public class EliminationGame {
      */
     private void initPlayers(){
         for (int i = numberOfPlayers; i > 0; i--){
-            list.insert(new CircularSinglyLinkedNode(names[i], "(Original spot: "+i+")"));
+            list.insert(new CircularSinglyLinkedNode<String>(names[i] + " (Original spot: "+i+")"));
         }
     }
 
@@ -64,12 +64,12 @@ public class EliminationGame {
         while (list.getCount() != 1) {
             list.display();
             CircularSinglyLinkedNode removed = list.removeAt(eliminationNumber + tempStarting);
-            if (removed != null) System.out.println("\nRemoved "+removed); //TODO: broken w/ two players?
+            if (removed != null) System.out.println("\nRemoved "+removed);
             tempStarting = 0;
         }
 
         //print the winner
-        System.out.println("\n\nWinner is " + list.getCurrent() + " !"); //last person remaining wins (size of 1)
+        System.out.println("\n\nWinner is " + list.getCurrent() + "!"); //last person remaining wins (size of 1)
     }
 
 }

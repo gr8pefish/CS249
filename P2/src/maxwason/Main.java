@@ -1,12 +1,10 @@
 package maxwason;
 
-import Part1.Line;
 import Part1.Store;
 import Part2.CircularSinglyLinkedNode;
 import Part2.Stack;
 import Part3.EliminationGame;
 
-import javax.print.DocFlavor;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,8 +12,8 @@ public class Main {
 
     public static void main(String[] args) {
 //        testStore(2, 3);
-//        testStack();
-        playEliminationGame(5,3,1);
+        testStack();
+//        playEliminationGame(5,4,1);
     }
 
 
@@ -64,29 +62,29 @@ public class Main {
     public static void testStack(){
 
         //creates two stacks
-        Stack firstStack = new Stack();
-        Stack secondStack = new Stack();
+        Stack<Integer> firstStack = new Stack<Integer>();
+        Stack<String> secondStack = new Stack<String>();
 
-        firstStack.push((int)1, (String)"hi"); //the typecasting is unnecessary, it is just to make it obvious to you that they are two different types
-        secondStack.push((float)1.2, (char)'e'); //once again, any object can be put on to the stack
+        firstStack.push(1);
+        secondStack.push("hi");
 
         //display both stacks
         firstStack.display();
         secondStack.display();
 
         //proper pushing
-        firstStack.push((Object)2, (Object)3);
-        firstStack.push(new CircularSinglyLinkedNode<Integer, String>(2,"no"), new CircularSinglyLinkedNode<Integer, String>(3,"yes")); //you can push ANY object, in this case the nodes inside nodes
+        firstStack.push(2);
+        firstStack.push(4);
         firstStack.display();
 
         //proper popping
-        secondStack.push(1,5);
+        secondStack.push("maybe");
         secondStack.display();
         secondStack.pop();
         secondStack.display();
         secondStack.pop();
         secondStack.display();
-        secondStack.pop(); //works with empty stacks
+        secondStack.pop(); //works with empty stacks (doesn't do anything)
         secondStack.display();
 
     }

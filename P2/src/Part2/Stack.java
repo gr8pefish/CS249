@@ -2,7 +2,7 @@ package Part2;
 
 import java.util.ArrayList;
 
-public class Stack<T,S> {
+public class Stack<T> {
 
     private CircularSinglyLinkedList list;
 
@@ -10,16 +10,15 @@ public class Stack<T,S> {
      * Implements a generic stack using the circular singly linked list as the underlying data structure (also composed of generic nodes)
      */
     public Stack(){
-        list = new CircularSinglyLinkedList();
+        list = new CircularSinglyLinkedList<T>();
     }
 
     /**
      * Pushes a new node onto the stack
-     * @param first - the first data element
-     * @param second - the second data element
+     * @param data - the data element
      */
-    public void push(T first, S second){
-        list.insert(new CircularSinglyLinkedNode(first, second));
+    public void push(T data){
+        list.insert(new CircularSinglyLinkedNode<T>(data));
     }
 
     /**

@@ -1,6 +1,6 @@
 package Part1;
 
-import Part2.Queue;
+import P1.Part2.Queue;
 
 import java.util.Random;
 

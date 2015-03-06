@@ -2,7 +2,7 @@ package Part2;
 
 import java.util.ArrayList;
 
-public class CircularSinglyLinkedList {
+public class CircularSinglyLinkedList<T> {
 
     private CircularSinglyLinkedNode current;
     private int count;
@@ -17,7 +17,7 @@ public class CircularSinglyLinkedList {
      * Inserts a node to the end of the list
      * @param toAdd - the node to add
      */
-    public void insert(CircularSinglyLinkedNode toAdd) {
+    public void insert(CircularSinglyLinkedNode<T> toAdd) {
         if (count == 0) {
             toAdd.setNext(toAdd);
             current = toAdd;
@@ -35,7 +35,7 @@ public class CircularSinglyLinkedList {
      * Removes the node from the front of the list
      * @return the node if one is removed, null otherwise
      */
-    public CircularSinglyLinkedNode remove(){
+    public CircularSinglyLinkedNode<T> remove(){
         if (count == 0){
             return null;
         } else if (count == 1) {
@@ -73,14 +73,16 @@ public class CircularSinglyLinkedList {
         } else if (count == 2) {
 //            System.out.println("Index: "+index);
             if (index%2 == 0){ //the modulus determines if the node to be removed is the current node or the other one (since it is just two elements)
+                CircularSinglyLinkedNode temp = current;
                 current = current.getNext();
                 current.setNext(current);
                 count--;
-                return current;
+                return temp;
             }else if (index%2 == 1){
-                current.setNext(null);
+                CircularSinglyLinkedNode temp = current.getNext();
+                current.setNext(current);
                 count--;
-                return current;
+                return temp;
             }else{
                 System.out.println("ERROR"); //should be unreachable
                 return null;
