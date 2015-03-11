@@ -44,28 +44,39 @@ public class LinkedMatrix {
         start = new Node2d(0);
         Node2d currNode = start;
 
-        int currRow = 0;
-        int currCol = 0;
+//        int currRow = 0;
+//        int currCol;
 
         // 0   1  2
         // 10 11 12
         // 20 21 22
         //then just add in print method if number is only one long
 
-        for (int j = 0; j < totalRows; j++){
-            currCol = 0;
-            for (int i = 0; i < totalCols; i++){ //Inits columns
-                currNode.setRight(new Node2d(++currCol * (currRow+1)));
+        for (int currRow = 0; currRow < totalRows; currRow++){
+            for (int k = 0; k < currRow; k++) {
+                currNode = start.getDown();
+                System.out.println("going down a row");
+            }
+            for (int currCol = 0; currCol < totalCols; currCol++){ //Inits columns
+
+                if (currRow == 0) {
+                    System.out.println("setting right to " + (oneIntFromTwo(currRow, currCol)));
+                    currNode.setRight(new Node2d((oneIntFromTwo(currRow, currCol))));
+                }else{
+                    System.out.println("Moving right");
+                    currNode = currNode.getRight();
+                }
+
                 if (currRow != totalRows-1){ //If not bottom row
-                    currNode.setDown(new Node2d(currCol * (currRow+2)));
+                    System.out.println("setting down to  "+(oneIntFromTwo(currRow, currCol)));
+                    currNode.setDown(new Node2d((oneIntFromTwo(currRow, currCol))));
                 }
             }
-            currRow++;
         }
 
-        for (MatrixIterator it = new MatrixIterator(this); it.hasNext();) {
-            System.out.println("Item is: " + it.next());
-        }
+//        for (MatrixIterator it = new MatrixIterator(this); it.hasNext();) {
+//            System.out.println("Item is: " + it.next());
+//        }
 
 
 //        for (int i = 0; i < totalCols; i++){ //Inits columns
@@ -78,9 +89,9 @@ public class LinkedMatrix {
 
     }
 
-//    private int oneIntFromTwo(int one, int two){
-//
-//    }
+    private int oneIntFromTwo(int row, int col){
+        return Integer.valueOf(Integer.toString(row) + Integer.toString(col));
+    }
 
     /**
      * Inserts a value at a specific location in the matrix.
