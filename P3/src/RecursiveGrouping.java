@@ -31,7 +31,12 @@ public class RecursiveGrouping {
      * @return 
      */
     private static String showTeams(int size, int current){
-        
+        if (size == 0){ //base case
+            return players;
+        }else if (current > size) { //can't have teams bigger than the size
+            return players;
+        }
+        showTeams(size-1, current);
         return null;
     }
 }
