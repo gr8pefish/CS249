@@ -41,54 +41,52 @@ public class LinkedMatrix {
      * Initializes the matrix.
      */
     private void initMatrix(){
+
+        //init start
         start = new Node2d(0);
-        Node2d currNode = start;
 
-//        int currRow = 0;
-//        int currCol;
+        //pointers
+        Node2d onLeft = start;
+        Node2d above;
 
-        // 0   1  2
-        // 10 11 12
-        // 20 21 22
-        //then just add in print method if number is only one long
+        for (int currRow = 0; currRow < totalRows; currRow++) {
+            if (currRow == 0) {
+                for (int col = 1; col < totalCols; col++){ //start at 1 because already set start node
+                    onLeft.setRight(new Node2d(col));
 
-        for (int currRow = 0; currRow < totalRows; currRow++){
-            for (int k = 0; k < currRow; k++) {
-                currNode = start.getDown();
-                System.out.println("going down a row");
-            }
-            for (int currCol = 0; currCol < totalCols; currCol++){ //Inits columns
-
-                if (currRow == 0) {
-                    System.out.println("setting right to " + (oneIntFromTwo(currRow, currCol)));
-                    currNode.setRight(new Node2d((oneIntFromTwo(currRow, currCol))));
-                }else{
-                    System.out.println("Moving right");
-                    currNode = currNode.getRight();
+                    onLeft = onLeft.getRight();
                 }
+            } else {
+                above = start;
+                for (int i = 1; i < currRow; i++) { //start at 1 b/c have to be 1 row higher for above
+                    above = above.getDown();
+                }
+                for (int col = 0; col < totalCols; col++){
+                    if (col == 0){
+                        above.setDown(new Node2d(oneIntFromTwo(currRow, col)));
 
-                if (currRow != totalRows-1){ //If not bottom row
-                    System.out.println("setting down to  "+(oneIntFromTwo(currRow, currCol)));
-                    currNode.setDown(new Node2d((oneIntFromTwo(currRow, currCol))));
+                        onLeft = above.getDown();
+                        above = above.getRight();
+                    }else{
+                        Node2d temp = new Node2d(oneIntFromTwo(currRow, col));
+                        onLeft.setRight(temp);
+                        above.setDown(temp);
+
+                        onLeft = onLeft.getRight();
+                        above = above.getRight();
+                    }
                 }
             }
         }
-
-//        for (MatrixIterator it = new MatrixIterator(this); it.hasNext();) {
-//            System.out.println("Item is: " + it.next());
-//        }
-
-
-//        for (int i = 0; i < totalCols; i++){ //Inits columns
-//            currNode.setRight(new Node2d(++colCounter * (currRow+1)));
-//            if (currRow != totalRows-1){ //If not bottom row
-//                currNode.setDown(new Node2d(colCounter * (currRow+2)));
-//            }
-//            colCounter++;
-//        }
-
     }
 
+    /**
+     * Helper method to get a single two length integer form two ints
+     *
+     * @param row first int
+     * @param col second int
+     * @return combined int
+     */
     private int oneIntFromTwo(int row, int col){
         return Integer.valueOf(Integer.toString(row) + Integer.toString(col));
     }
@@ -110,19 +108,16 @@ public class LinkedMatrix {
             System.out.println("Invalid col parameter");
             return false;
         }else{
-            int counter = 0;
-            int desiredVal = col + (row * totalCols);
+            Node2d currNode = start;
 
-            Node2d curr = start;
-            iterator.reset();
-            while(iterator.hasNext()){
-                if (counter == desiredVal)
-                    break;
-                else
-                    curr = (Node2d) iterator.next();
-                counter++;
+            for (int i = 0; i < col; i++){
+                currNode = currNode.getRight();
             }
-            curr.setValue(val);
+            for (int i = 0; i < row; i++){
+                currNode = currNode.getDown();
+            }
+
+            currNode.setValue(val);
             return true;
         }
     }
@@ -146,21 +141,75 @@ public class LinkedMatrix {
      * @return a string representation of the matrix
      */
     public String display() {
+        return loopThrough(false);
+    }
 
-        String output;
-
-        String[][] strings = new String[totalRows][totalCols];
-        Node2d currNode = start;
+    private String loopThrough(boolean getTotals){
+        String returnString = "";
+        Node2d currNode;
+        int rowTotal;
         for (int i = 0; i < totalRows; i++){
-            currNode = currNode.getRight();
+            currNode = start;
+            if (i != 0) {
+                returnString += "\n";
+                for (int j = 0; j < i; j++) {
+                    currNode = currNode.getDown();
+                }
+            }
+            rowTotal = 0;
+            for (int k = 0; k < totalCols; k++){
+                if (currNode.getValue() < 10)
+                    returnString += "0"+Integer.toString(currNode.getValue())+" ";
+                else
+                    returnString += Integer.toString(currNode.getValue())+" ";
+                if(getTotals) rowTotal += currNode.getValue();
 
-            for (int j = 0; j < totalCols; j++){
-                currNode = currNode.getDown();
+                currNode = currNode.getRight();
+
+                if (getTotals && k == totalCols-1){
+                    returnString += "| ";
+                    if (rowTotal < 10)
+                        returnString += "0"+Integer.toString(rowTotal)+" ";
+                    else
+                        returnString += Integer.toString(rowTotal)+" ";
+                }
             }
         }
 
-        System.out.println(Arrays.deepToString(strings));
-        return null;
+        int colTotal;
+        if (getTotals){
+            returnString += "\n";
+            for (int i = 0; i < totalCols; i++){
+                currNode = start;
+                if (i != 0) {
+                    for (int j = 0; j < i; j++) {
+                        currNode = currNode.getRight();
+                    }
+                }
+                colTotal = 0;
+                for (int j = 0; j < totalRows; j++){
+                    colTotal += currNode.getValue();
+
+                    currNode = currNode.getDown();
+
+                    if (j == totalRows-1){
+                        if ( i ==0) {
+                            for (int k = 0; k < totalCols; k++) {
+                                returnString += "-- ";
+                            }
+                            returnString += "\n";
+                        }
+                        if (colTotal < 10)
+                            returnString += "0"+Integer.toString(colTotal)+" ";
+                        else if (colTotal > 99)
+                            returnString += Integer.toString(colTotal);
+                        else
+                            returnString += Integer.toString(colTotal)+" ";
+                    }
+                }
+            }
+        }
+        return returnString;
     }
 
     /**
@@ -168,7 +217,7 @@ public class LinkedMatrix {
      * @return a string representation of the matrix with row/col sums
      */
     public String displaySummed() {
-        return null;
+        return loopThrough(true);
     }
 
     /**
@@ -224,7 +273,7 @@ public class LinkedMatrix {
     }
 
     /**
-     * Private inner iterator
+     * Private inner iterator -unused
      */
     private class MatrixIterator implements java.util.Iterator{
 

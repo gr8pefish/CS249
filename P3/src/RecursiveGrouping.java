@@ -21,7 +21,16 @@ public class RecursiveGrouping {
      * @param args [0]= int players>0, [1] = int group size>0
      */
     public static void main(String[] args){
-       
+        groupsize = Integer.valueOf(args[1]);
+        initTeams(Integer.valueOf(args[0]));
+//        showTeams(players, groupsize);
+    }
+
+    private static void initTeams(int numPlayers){
+        String[] letters = {"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"};
+        for (int i = 0; i < numPlayers; i++) {
+            players = players + letters[i];
+        }
     }
 
     /**

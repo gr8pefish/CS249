@@ -12,8 +12,8 @@ public class testRecursiveKnapsackSolver {
     //Call unit test methods from the main method for testing
     public static void main(String[] args){
         testBadInputs();
+//        testNoPerfects();
         testPerfectPossible();
-//	testNoPerfects();	//optional
     }
 
     //test to ensure your knapsack does not crash if fed bad input values
@@ -26,8 +26,9 @@ public class testRecursiveKnapsackSolver {
 
     }
 
-    //Optional! For and extra challenge make you knapsack return the best possible solution when there is no perfect solution
-    //the best solution should be better than any other solution (based on total weight, regardless of the order of appearance)
+    //test to ensure that your knapsack will find the best possible solution when there is no perfect solution
+    //the best solution should be better than any other solution (regardless of the order of appearance)
     private static void testBestPossible(){
     }
 }
+
