@@ -50,21 +50,23 @@ public class LinkedMatrix {
         Node2d above;
 
         for (int currRow = 0; currRow < totalRows; currRow++) {
-            if (currRow == 0) {
+            if (currRow == 0) { //special handling because no above pointer
                 for (int col = 1; col < totalCols; col++){ //start at 1 because already set start node
                     onLeft.setRight(new Node2d(col));
 
+                    //move pointer
                     onLeft = onLeft.getRight();
                 }
             } else {
                 above = start;
                 for (int i = 1; i < currRow; i++) { //start at 1 b/c have to be 1 row higher for above
-                    above = above.getDown();
+                    above = above.getDown(); //resets above to the correct row
                 }
                 for (int col = 0; col < totalCols; col++){
                     if (col == 0){
                         above.setDown(new Node2d(oneIntFromTwo(currRow, col)));
 
+                        //move pointers
                         onLeft = above.getDown();
                         above = above.getRight();
                     }else{
@@ -72,6 +74,7 @@ public class LinkedMatrix {
                         onLeft.setRight(temp);
                         above.setDown(temp);
 
+                        //move pointers
                         onLeft = onLeft.getRight();
                         above = above.getRight();
                     }
@@ -166,6 +169,7 @@ public class LinkedMatrix {
 
                 currNode = currNode.getRight();
 
+                //Add the row total to the end (if applicable)
                 if (getTotals && k == totalCols-1){
                     returnString += "| ";
                     if (rowTotal < 10)
@@ -176,6 +180,7 @@ public class LinkedMatrix {
             }
         }
 
+        //Sum up the columns (if applicable)
         int colTotal;
         if (getTotals){
             returnString += "\n";
@@ -193,9 +198,9 @@ public class LinkedMatrix {
                     currNode = currNode.getDown();
 
                     if (j == totalRows-1){
-                        if ( i ==0) {
+                        if (i ==0) {
                             for (int k = 0; k < totalCols; k++) {
-                                returnString += "-- ";
+                                returnString += "-- "; //Just formatting niceness
                             }
                             returnString += "\n";
                         }
@@ -273,7 +278,8 @@ public class LinkedMatrix {
     }
 
     /**
-     * Private inner iterator -unused
+     * Private inner iterator - unused
+     * I initially thought I would need this, but discarded it as I thought out the problem more. Leaving it in because it still works.
      */
     private class MatrixIterator implements java.util.Iterator{
 

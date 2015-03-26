@@ -85,10 +85,4 @@ public class LinkedMatrixApp {
        
     }
 
-    // this private helper method should be used to indicate to the user when the system is ready for a new command
-    // you can make more helper methods for other prompts as needed
-    private static void promptReady(){
-
-        
-    }
 }
